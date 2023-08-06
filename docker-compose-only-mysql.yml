@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  snackhub-mysql-db:
+    container_name: snackhub-mysql-db
+    restart: always
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=snackhub
+    ports:
+      - 3307:3306
+    networks:
+      - snackhub_network
+    volumes:
+      - db:/var/lib/mysql
+      - ./infrastructure/src/main/resources/db.migration/init.sql:/docker-entrypoint-initdb.d/init.sql
+networks:
+  snackhub_network:
+    driver: bridge
+volumes:
+  db:

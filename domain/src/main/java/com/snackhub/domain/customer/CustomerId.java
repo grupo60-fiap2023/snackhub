@@ -7,22 +7,18 @@ import java.util.Objects;
 
 public class CustomerId extends Identifier {
 
-    private final String value;
+    private final Long value;
 
-    private CustomerId(String value) {
+    private CustomerId(Long value) {
         this.value = Objects.requireNonNull(value);
     }
 
-    public static CustomerId from(final String id) {
+    public static CustomerId from(final Long id) {
         return new CustomerId(id);
     }
 
-    public static CustomerId unique() {
-        return CustomerId.from(IdUtils.uuid());
-    }
-
     @Override
-    public String getValue() {
+    public Long getValue() {
         return value;
     }
 }

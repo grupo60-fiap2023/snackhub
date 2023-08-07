@@ -14,8 +14,10 @@ import javax.persistence.*;
 public class OrderItemJpaEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private String id;
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductJpaEntity product;
@@ -29,19 +31,31 @@ public class OrderItemJpaEntity {
     public OrderItemJpaEntity() {
     }
 
-    public OrderItemJpaEntity(String id, ProductJpaEntity product, Integer quantity, OrderJpaEntity orderJpaEntity) {
+    public OrderItemJpaEntity(Long id, ProductJpaEntity product, Integer quantity, OrderJpaEntity orderJpaEntity) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
         this.orderJpaEntity = orderJpaEntity;
     }
+    public OrderItemJpaEntity(ProductJpaEntity product, Integer quantity, OrderJpaEntity orderJpaEntity) {
+        this.product = product;
+        this.quantity = quantity;
+        this.orderJpaEntity = orderJpaEntity;
+    }
 
-    public OrderItemJpaEntity(String id, ProductJpaEntity product, Integer quantity) {
-        this.id = id;
+    public OrderItemJpaEntity(ProductJpaEntity product, Integer quantity) {
         this.product = product;
         this.quantity = quantity;
     }
 
+    public static OrderItemJpaEntity create(final OrderJpaEntity orderJpaEntity, final OrderItem orderItem) {
+        var productJpaEntity = ProductJpaEntity.from(orderItem.getProduct());
+        return new OrderItemJpaEntity(
+                productJpaEntity,
+                orderItem.getQuantity(),
+                orderJpaEntity);
+
+    }
     public static OrderItemJpaEntity from(final OrderJpaEntity orderJpaEntity, final OrderItem orderItem) {
         var productJpaEntity = ProductJpaEntity.from(orderItem.getProduct());
         return new OrderItemJpaEntity(
@@ -56,7 +70,7 @@ public class OrderItemJpaEntity {
         return OrderItem.with(OrderItemId.from(getId()), product, getQuantity());
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

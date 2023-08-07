@@ -23,8 +23,7 @@ public class Product extends Entity<ProductId> {
     }
 
     public static Product newProduct(final String name, final BigDecimal price, final String description, final Category category) {
-        final var id = ProductId.unique();
-        return new Product(id, name, price, description, category);
+        return new Product(null, name, price, description, category);
     }
 
     public static Product with(final ProductId productId, final String name,  final BigDecimal price, final String description, final Category category) {

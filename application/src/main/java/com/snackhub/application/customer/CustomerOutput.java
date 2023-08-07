@@ -3,7 +3,7 @@ package com.snackhub.application.customer;
 
 import com.snackhub.domain.customer.Customer;
 
-public record CustomerOutput(String id,
+public record CustomerOutput(Long id,
                              String firstName,
                              String lastName,
                              String cpf) {

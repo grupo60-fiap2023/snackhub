@@ -7,7 +7,7 @@ import com.snackhub.domain.product.ProductId;
 
 import java.util.Objects;
 
-public class DeleteProductUseCase extends UnitUseCase<String> {
+public class DeleteProductUseCase extends UnitUseCase<Long> {
 
     private final ProductGateway productGateway;
 
@@ -16,7 +16,7 @@ public class DeleteProductUseCase extends UnitUseCase<String> {
     }
 
     @Override
-    public void execute(String productId) {
+    public void execute(Long productId) {
         this.productGateway.deleteById(ProductId.from(productId));
     }
 }

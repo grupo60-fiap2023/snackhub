@@ -3,18 +3,16 @@ package com.snackhub.infrastructure.customer.persistence;
 import com.snackhub.domain.customer.Customer;
 import com.snackhub.domain.customer.CustomerId;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name = "Customer")
 @Table(name = "customers")
 public class CustomerJpaEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private String id;
+    private Long id;
 
     @Column(name = "firstName", nullable = false)
     private String firstName;
@@ -28,11 +26,21 @@ public class CustomerJpaEntity {
     public CustomerJpaEntity() {
     }
 
-    public CustomerJpaEntity(String id, String firstName, String lastName, String cpf) {
+    public CustomerJpaEntity(String firstName, String lastName, String cpf) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.cpf = cpf;
+    }
+
+    public CustomerJpaEntity(Long id, String firstName, String lastName, String cpf) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.cpf = cpf;
+    }
+
+    public static CustomerJpaEntity create(final Customer customer) {
+        return new CustomerJpaEntity(customer.getFirstName(), customer.getLastName(), customer.getCpf());
     }
 
     public static CustomerJpaEntity from(final Customer customer) {
@@ -40,14 +48,14 @@ public class CustomerJpaEntity {
     }
 
     public static CustomerJpaEntity from(final String cpf) {
-        return new CustomerJpaEntity(null, null, null, cpf);
+        return new CustomerJpaEntity(null, null, cpf);
     }
 
     public Customer toAggregate() {
         return Customer.with(CustomerId.from(getId()), getFirstName(), getLastName(), getCpf());
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

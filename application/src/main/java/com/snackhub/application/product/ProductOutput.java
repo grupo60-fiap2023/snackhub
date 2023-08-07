@@ -5,7 +5,7 @@ import com.snackhub.domain.product.Product;
 
 import java.math.BigDecimal;
 
-public record ProductOutput(String id,
+public record ProductOutput(Long id,
                             String name,
                             BigDecimal price,
                             String description,

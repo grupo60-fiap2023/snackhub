@@ -9,22 +9,18 @@ import java.util.Objects;
 
 public class ProductId extends Identifier {
 
-    private final String value;
+    private final Long value;
 
-    private ProductId(String value) {
+    private ProductId(Long value) {
         this.value = Objects.requireNonNull(value);
     }
 
-    public static ProductId from(final String id) {
+    public static ProductId from(final Long id) {
         return new ProductId(id);
     }
 
-    public static ProductId unique() {
-        return ProductId.from(IdUtils.uuid());
-    }
-
     @Override
-    public String getValue() {
+    public Long getValue() {
         return value;
     }
 }

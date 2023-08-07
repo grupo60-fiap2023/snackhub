@@ -42,7 +42,7 @@ public interface ProductAPI {
             @ApiResponse(responseCode = "404", description = "Category was not found"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
-    ResponseEntity<?> updateById(@PathVariable(name = "id") String id, @RequestBody ProductRequest input);
+    ResponseEntity<?> updateById(@PathVariable(name = "id") Long id, @RequestBody ProductRequest input);
 
     @DeleteMapping(value = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -52,7 +52,7 @@ public interface ProductAPI {
             @ApiResponse(responseCode = "404", description = "Category was not found"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
-    ResponseEntity<Void> deleteById(@PathVariable(name = "id") String id);
+    ResponseEntity<Void> deleteById(@PathVariable(name = "id") Long id);
 
     @GetMapping("/{category}")
     @Operation(summary = "List all products by category")

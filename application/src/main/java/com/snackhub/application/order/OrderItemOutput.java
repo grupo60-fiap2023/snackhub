@@ -3,8 +3,8 @@ package com.snackhub.application.order;
 import com.snackhub.domain.order.OrderItem;
 import com.snackhub.domain.product.Product;
 
-public record OrderItemOutput(String id,
-                              String productId,
+public record OrderItemOutput(Long id,
+                              Long productId,
                               String productName,
                               Integer quantity) {
 

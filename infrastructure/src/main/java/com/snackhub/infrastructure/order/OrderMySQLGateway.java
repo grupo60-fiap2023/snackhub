@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class OrderMySQLGateway implements OrderGateway {
@@ -24,13 +25,19 @@ public class OrderMySQLGateway implements OrderGateway {
 
     @Override
     public Order save(Order order) {
-        return this.repository.save(OrderJpaEntity.from(order)).toAggregate();
+        return this.repository.save(OrderJpaEntity.create(order)).toAggregate();
     }
 
     @Override
     @Transactional
     public List<Order> findAllOrders() {
         return this.repository.findAll().stream().map(OrderJpaEntity::toAggregate).toList();
+    }
+
+    @Override
+    @Transactional
+    public List<Order> findAllOrdersByStatus(Set<OrderStatus> status) {
+        return this.repository.findAllOrderByStatusAndCreatedDate(status).stream().map(OrderJpaEntity::toAggregate).toList();
     }
 
     @Override

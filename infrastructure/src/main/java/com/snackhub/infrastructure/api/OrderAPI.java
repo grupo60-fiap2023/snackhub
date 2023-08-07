@@ -32,7 +32,7 @@ public interface OrderAPI {
     ResponseEntity<?> createOrder(@RequestBody @Valid CreateOrderRequest input);
 
     @GetMapping("/list")
-    @Operation(summary = "List all orders")
+    @Operation(summary = "List all orders with priority states orders READY > IN_PREPARATION > RECEIVED and order by received date")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Listed successfully"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
@@ -58,5 +58,14 @@ public interface OrderAPI {
             @ApiResponse(responseCode = "404", description = "Order was not found"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
-    ResponseEntity<?> updateStatusById(@PathVariable(name = "id") String id, @RequestBody UpdateStatusRequest request);
+    ResponseEntity<?> updateStatusById(@PathVariable(name = "id") Long id, @RequestBody UpdateStatusRequest request);
+
+    @GetMapping("/paymentstatus/{id}")
+    @Operation(summary = "Get payment status")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Status updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Order was not found"),
+            @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
+    })
+    ResponseEntity<?> getPaymentStatusById(@PathVariable(name = "id") Long id);
 }

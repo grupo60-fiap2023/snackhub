@@ -21,7 +21,6 @@ public class OrderValidator extends Validator {
 
     @Override
     public void validate() {
-        checkTicketNameConstraints(order);
         checkObservationConstraints(order);
         checkItemsOrderConstraints(order);
     }
@@ -29,23 +28,6 @@ public class OrderValidator extends Validator {
     private void checkItemsOrderConstraints(Order order) {
         if (order.getItems() == null || order.getItems().isEmpty()) {
             this.validationHandler().append(new Error("The order is necessary almost one item"));
-        }
-    }
-
-    private void checkTicketNameConstraints(Order order) {
-        if (order.getTicket() == null) {
-            this.validationHandler().append(new Error("'ticket' should not be null"));
-            return;
-        }
-
-        if (order.getTicket().isBlank()) {
-            this.validationHandler().append(new Error("'ticket' should not be empty"));
-            return;
-        }
-
-        final int length = order.getTicket().trim().length();
-        if (length > TICKET_MAX_LENGTH || length < MIN_LENGTH) {
-            this.validationHandler().append(new Error("'ticket' must be between 1 and 50 characters"));
         }
     }
 

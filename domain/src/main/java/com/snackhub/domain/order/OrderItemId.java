@@ -6,22 +6,18 @@ import com.snackhub.domain.utils.IdUtils;
 
 public class OrderItemId extends Identifier {
 
-    private final String value;
+    private final Long value;
 
-    public OrderItemId(String value) {
+    public OrderItemId(Long value) {
         this.value = value;
     }
 
-    public static OrderItemId from(final String id) {
+    public static OrderItemId from(final Long id) {
         return new OrderItemId(id);
     }
 
-    public static OrderItemId unique() {
-        return OrderItemId.from(IdUtils.uuid());
-    }
-
     @Override
-    public String getValue() {
+    public Long getValue() {
         return value;
     }
 }

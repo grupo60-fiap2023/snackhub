@@ -18,8 +18,7 @@ public class Customer extends Entity<CustomerId> {
     }
 
     public static Customer newCustomer(final String firstName, final String lastName, final String cpf) {
-        final var id = CustomerId.unique();
-        return new Customer(id, firstName, lastName, cpf);
+        return new Customer(null, firstName, lastName, cpf);
     }
 
     public static Customer with(final CustomerId customerId, final String firstName, final String lastName, final String cpf) {

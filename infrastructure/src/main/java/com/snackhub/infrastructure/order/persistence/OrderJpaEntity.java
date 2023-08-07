@@ -3,6 +3,7 @@ package com.snackhub.infrastructure.order.persistence;
 import com.snackhub.domain.order.Order;
 import com.snackhub.domain.order.OrderId;
 import com.snackhub.domain.order.OrderStatus;
+import com.snackhub.domain.order.PaymentStatus;
 import com.snackhub.infrastructure.customer.persistence.CustomerJpaEntity;
 
 import javax.persistence.*;
@@ -15,11 +16,9 @@ import java.util.List;
 public class OrderJpaEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private String id;
-
-    @Column(name = "ticket", nullable = false)
-    private String ticket;
+    private Long id;
 
     @OneToMany(mappedBy = "orderJpaEntity", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private List<OrderItemJpaEntity> items;
@@ -35,26 +34,60 @@ public class OrderJpaEntity {
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus orderStatus;
 
+    @Column(name = "payment_status", nullable = false)
+    @Convert(converter = PaymentStatusConverter.class)
+    private PaymentStatus paymentStatus;
+
     @Column(name = "created_at", nullable = false, columnDefinition = "DATETIME(6)")
     private Instant createdAt;
 
     public OrderJpaEntity() {
     }
 
-    public OrderJpaEntity(String id,
-                          String ticket,
+    public OrderJpaEntity(Long id,
                           List<OrderItemJpaEntity> items,
                           CustomerJpaEntity customerJpaEntity,
                           String observation,
                           OrderStatus orderStatus,
+                          PaymentStatus paymentStatus,
                           Instant createdAt) {
         this.id = id;
-        this.ticket = ticket;
         this.items = items;
         this.customerJpaEntity = customerJpaEntity;
         this.observation = observation;
         this.orderStatus = orderStatus;
+        this.paymentStatus = paymentStatus;
         this.createdAt = createdAt;
+    }
+
+    public OrderJpaEntity(List<OrderItemJpaEntity> items,
+                          CustomerJpaEntity customerJpaEntity,
+                          String observation,
+                          OrderStatus orderStatus,
+                          PaymentStatus paymentStatus,
+                          Instant createdAt) {
+        this.items = items;
+        this.customerJpaEntity = customerJpaEntity;
+        this.observation = observation;
+        this.orderStatus = orderStatus;
+        this.paymentStatus = paymentStatus;
+        this.createdAt = createdAt;
+    }
+
+    public static OrderJpaEntity create(final Order order) {
+        CustomerJpaEntity customerJpa = CustomerJpaEntity.from(order.getCustomer());
+
+        OrderJpaEntity orderJpaEntity = new OrderJpaEntity(
+                new ArrayList<>(),
+                customerJpa,
+                order.getObservation(),
+                order.getStatus(),
+                order.getPaymentStatus(),
+                order.getCreatedAt());
+
+        order.getItems().stream().map(orderItem -> OrderItemJpaEntity.create(orderJpaEntity, orderItem)).forEach(orderJpaEntity.getItems()::add);
+
+        return orderJpaEntity;
     }
 
     public static OrderJpaEntity from(final Order order) {
@@ -62,11 +95,11 @@ public class OrderJpaEntity {
 
         OrderJpaEntity orderJpaEntity = new OrderJpaEntity(
                 order.getId().getValue(),
-                order.getTicket(),
                 new ArrayList<>(),
                 customerJpa,
                 order.getObservation(),
                 order.getStatus(),
+                order.getPaymentStatus(),
                 order.getCreatedAt());
 
         order.getItems().stream().map(orderItem -> OrderItemJpaEntity.from(orderJpaEntity, orderItem)).forEach(orderJpaEntity.getItems()::add);
@@ -79,9 +112,8 @@ public class OrderJpaEntity {
                 null,
                 null,
                 null,
-                null,
-                null,
                 status,
+                null,
                 null);
     }
 
@@ -89,20 +121,16 @@ public class OrderJpaEntity {
         var orderItems = getItems().stream().map(OrderItemJpaEntity::toAggregate).toList();
         return Order.with(
                 OrderId.from(getId()),
-                getTicket(),
                 orderItems,
                 getCustomerJpaEntity().toAggregate(),
                 getObservation(),
                 getOrderStatus(),
+                getPaymentStatus(),
                 getCreatedAt());
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
-    }
-
-    public String getTicket() {
-        return ticket;
     }
 
     public List<OrderItemJpaEntity> getItems() {
@@ -119,6 +147,10 @@ public class OrderJpaEntity {
 
     public OrderStatus getOrderStatus() {
         return orderStatus;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 
     public Instant getCreatedAt() {

@@ -29,7 +29,7 @@ public class CustomerMySQLGateway implements CustomerGateway {
 
     @Override
     public Customer save(Customer customer) {
-        return this.repository.save(CustomerJpaEntity.from(customer)).toAggregate();
+        return this.repository.save(CustomerJpaEntity.create(customer)).toAggregate();
     }
 
     @Override

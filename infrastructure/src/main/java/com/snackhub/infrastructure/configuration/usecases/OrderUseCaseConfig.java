@@ -3,6 +3,7 @@ package com.snackhub.infrastructure.configuration.usecases;
 import com.snackhub.application.order.create.CreateOrderUseCase;
 import com.snackhub.application.order.retrieve.FindAllOrdersUseCase;
 import com.snackhub.application.order.retrieve.FindOrdersByStatusUseCase;
+import com.snackhub.application.order.retrieve.FindPaymentStatusByOrderIdUseCase;
 import com.snackhub.application.order.update.UpdateOrderStatusUseCase;
 import com.snackhub.domain.customer.CustomerGateway;
 import com.snackhub.domain.order.OrderGateway;
@@ -43,5 +44,10 @@ public class OrderUseCaseConfig {
     @Bean
     public UpdateOrderStatusUseCase updateOrderStatus() {
         return new UpdateOrderStatusUseCase(orderGateway);
+    }
+
+    @Bean
+    public FindPaymentStatusByOrderIdUseCase findPaymentStatusByOrderIdUseCase(){
+        return new FindPaymentStatusByOrderIdUseCase(orderGateway);
     }
 }

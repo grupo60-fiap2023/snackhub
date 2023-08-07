@@ -1,5 +1,5 @@
 create table customers (
-	id varchar(50) not null,
+	id INT AUTO_INCREMENT,
     cpf varchar(11) not null,
     first_name varchar(255) not null,
     last_name varchar(255) not null,
@@ -8,7 +8,7 @@ create table customers (
 alter table customers add constraint UK_customer_cpf unique (cpf);
 
 create table products (
-	id varchar(50) not null,
+	id INT AUTO_INCREMENT,
     category varchar(255) not null,
     description varchar(255) not null,
     name varchar(255) not null,
@@ -16,20 +16,20 @@ create table products (
     primary key (id));
 
 CREATE TABLE orders (
-	id varchar(50) not null,
-	ticket varchar(50) not null,
-	customer_id VARCHAR(50),
+	id INT AUTO_INCREMENT,
+	customer_id INT,
 	observation VARCHAR(255),
-	status varchar(50) not null,
-	created_at DATE,
+	status INT not null,
+    payment_status INT not null,
+	created_at DATETIME(3),
 	FOREIGN KEY (customer_id) REFERENCES customers(id),
 	primary key (id)
 );
 
 CREATE TABLE order_items (
-  id varchar(50) not null,
-  order_id varchar(50) not null,
-  product_id varchar(50) not null,
+  id INT AUTO_INCREMENT,
+  order_id INT,
+  product_id INT,
   quantity INT,
   FOREIGN KEY (order_id) REFERENCES orders(id),
   FOREIGN KEY (product_id) REFERENCES products(id),

@@ -3,9 +3,9 @@ package com.snackhub.application.order.retrieve;
 import com.snackhub.application.NullaryUseCase;
 import com.snackhub.application.order.OrderOutput;
 import com.snackhub.domain.order.OrderGateway;
+import com.snackhub.domain.order.OrderStatus;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FindAllOrdersUseCase extends NullaryUseCase<List<OrderOutput>> {
 
@@ -17,6 +17,7 @@ public class FindAllOrdersUseCase extends NullaryUseCase<List<OrderOutput>> {
 
     @Override
     public List<OrderOutput> execute() {
-        return this.orderGateway.findAllOrders().stream().map(OrderOutput::from).toList();
+        Set<OrderStatus> statusList = new HashSet<>(Arrays.asList(OrderStatus.READY, OrderStatus.IN_PREPARATION, OrderStatus.RECEIVED));
+        return this.orderGateway.findAllOrdersByStatus(statusList).stream().map(OrderOutput::from).toList();
     }
 }

@@ -30,65 +30,12 @@ public class OrderTest {
     @Test
     public void givenAValidParams_whenCallNewOrder_thenInstantiateAOrder() {
         OrderItem item = OrderItem.newOrderItem(getProductMock(), 2);
-        final var order = Order.newOrder("ticket", Arrays.asList(item), getCustomerMock(), null);
+        final var order = Order.newOrder(Arrays.asList(item), getCustomerMock(), null, PaymentStatus.APPROVED);
 
         Assertions.assertNotNull(order);
         Assertions.assertNotNull(order.getId());
-        Assertions.assertEquals("ticket", order.getTicket());
         Assertions.assertNotNull(order.getCustomer());
         Assertions.assertEquals(item, order.getItems().stream().findFirst().get());
-    }
-
-    @Test
-    public void givenAnInvalidNullTicket_whenCallNewOrderAndValidate_thenShouldReceiveError() {
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'ticket' should not be null";
-
-        OrderItem item = OrderItem.newOrderItem(getProductMock(), 2);
-        final var order = Order.newOrder(null, Arrays.asList(item), getCustomerMock(), "Nada");
-
-        Notification notification = Notification.create();
-        order.validate(notification);
-
-        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, notification.getErrors().get(0).message());
-    }
-
-    @Test
-    public void givenAnInvalidEmptyTicket_whenCallNewOrderAndValidate_thenShouldReceiveError() {
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'ticket' should not be empty";
-
-        OrderItem item = OrderItem.newOrderItem(getProductMock(), 2);
-        final var order = Order.newOrder("", Arrays.asList(item), getCustomerMock(), "Nada");
-
-        Notification notification = Notification.create();
-        order.validate(notification);
-
-        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, notification.getErrors().get(0).message());
-    }
-
-    @Test
-    public void givenAInvalidTicket_whenCallNewOrdertAndValidate_thenShouldReceiveError() {
-        final String expectedTicket = """
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                """;
-
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'ticket' must be between 1 and 50 characters";
-
-        OrderItem item = OrderItem.newOrderItem(getProductMock(), 2);
-        final var order = Order.newOrder(expectedTicket, Arrays.asList(item), getCustomerMock(), "Nada");
-
-        Notification notification = Notification.create();
-        order.validate(notification);
-
-        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, notification.getErrors().get(0).message());
     }
 
     @Test
@@ -104,7 +51,7 @@ public class OrderTest {
         final var expectedErrorMessage = "'observation' must be between 1 and 255 characters";
 
         OrderItem item = OrderItem.newOrderItem(getProductMock(), 2);
-        final var order = Order.newOrder("A40" , Arrays.asList(item), getCustomerMock(), expectedObservation);
+        final var order = Order.newOrder(Arrays.asList(item), getCustomerMock(), expectedObservation, PaymentStatus.APPROVED);
 
         Notification notification = Notification.create();
         order.validate(notification);
@@ -118,7 +65,7 @@ public class OrderTest {
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "The order is necessary almost one item";
 
-        final var order = Order.newOrder("A40" , null, getCustomerMock(), null);
+        final var order = Order.newOrder(null, getCustomerMock(), null, PaymentStatus.APPROVED);
 
         Notification notification = Notification.create();
         order.validate(notification);
@@ -132,7 +79,7 @@ public class OrderTest {
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "The order is necessary almost one item";
 
-        final var order = Order.newOrder("A40" , new ArrayList<>(), getCustomerMock(), null);
+        final var order = Order.newOrder(new ArrayList<>(), getCustomerMock(), null, PaymentStatus.APPROVED);
 
         Notification notification = Notification.create();
         order.validate(notification);

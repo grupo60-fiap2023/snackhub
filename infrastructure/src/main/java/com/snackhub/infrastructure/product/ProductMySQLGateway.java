@@ -23,7 +23,7 @@ public class ProductMySQLGateway implements ProductGateway {
 
     @Override
     public Product save(Product product) {
-        return this.repository.save(ProductJpaEntity.from(product)).toAggregate();
+        return this.repository.save(ProductJpaEntity.create(product)).toAggregate();
     }
 
     @Override

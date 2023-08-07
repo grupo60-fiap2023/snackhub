@@ -12,43 +12,42 @@ import java.util.List;
 
 public class Order extends Entity<OrderId> {
 
-    private final String ticket;
     private final List<OrderItem> items;
     private final Customer customer;
     private final String observation;
     private OrderStatus status;
+    private PaymentStatus paymentStatus;
     private final Instant createdAt;
 
     private Order(final OrderId orderId,
-                  final String ticket,
                   final List<OrderItem> items,
                   final Customer customer,
                   final String observation,
                   final OrderStatus status,
+                  final PaymentStatus paymentStatus,
                   final Instant creationDate) {
         super(orderId);
-        this.ticket = ticket;
         this.items = items;
         this.customer = customer;
         this.observation = observation;
         this.status = status;
+        this.paymentStatus = paymentStatus;
         this.createdAt = creationDate;
     }
 
-    public static Order newOrder(final String ticket, final List<OrderItem> items, final Customer customer, final String observation) {
-        final var id = OrderId.unique();
+    public static Order newOrder(final List<OrderItem> items, final Customer customer, final String observation, final PaymentStatus paymentStatus) {
         final var now = InstantUtils.now();
-        return new Order(id, ticket, items, customer, observation, OrderStatus.RECEIVED, now);
+        return new Order(null, items, customer, observation, OrderStatus.RECEIVED, paymentStatus, now);
     }
 
     public static Order with(final OrderId orderId,
-                             final String ticket,
                              final List<OrderItem> items,
                              final Customer customer,
                              final String observation,
                              final OrderStatus status,
+                             final PaymentStatus paymentStatus,
                              final Instant createdAt) {
-        return new Order(orderId, ticket, items, customer, observation, status, createdAt);
+        return new Order(orderId, items, customer, observation, status, paymentStatus, createdAt);
     }
 
     @Override
@@ -72,12 +71,12 @@ public class Order extends Entity<OrderId> {
         return status;
     }
 
-    public String getTicket() {
-        return ticket;
-    }
-
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 
     public void changeStatus(OrderStatus newStatus){

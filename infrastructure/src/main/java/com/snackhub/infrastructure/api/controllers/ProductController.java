@@ -57,7 +57,7 @@ public class ProductController implements ProductAPI {
     }
 
     @Override
-    public ResponseEntity<?> updateById(String id, ProductRequest request) {
+    public ResponseEntity<?> updateById(Long id, ProductRequest request) {
         ProductResponse response;
         try{
             UpdateProductCommand command = UpdateProductCommand.with(id, request.name(), request.price(), request.description(), request.category());
@@ -71,7 +71,7 @@ public class ProductController implements ProductAPI {
     }
 
     @Override
-    public ResponseEntity<Void> deleteById(String id) {
+    public ResponseEntity<Void> deleteById(Long id) {
         this.deleteProductUseCase.execute(id);
         return ResponseEntity.noContent().build();
     }

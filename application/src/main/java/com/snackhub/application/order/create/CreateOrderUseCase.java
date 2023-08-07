@@ -10,6 +10,7 @@ import com.snackhub.domain.exceptions.ErrorName;
 import com.snackhub.domain.order.Order;
 import com.snackhub.domain.order.OrderGateway;
 import com.snackhub.domain.order.OrderItem;
+import com.snackhub.domain.order.PaymentStatus;
 import com.snackhub.domain.product.ProductGateway;
 import com.snackhub.domain.product.ProductId;
 import com.snackhub.domain.validation.Error;
@@ -39,7 +40,7 @@ public class CreateOrderUseCase extends UseCase<CreateOrderCommand, OrderOutput>
     @Override
     public OrderOutput execute(CreateOrderCommand command) {
         Optional<Customer> customer = getCustomer(command);
-        Order order = Order.newOrder(command.ticket(), getOrderItemsValid(command), customer.get(), command.observation());
+        Order order = Order.newOrder(getOrderItemsValid(command), customer.get(), command.observation(), PaymentStatus.APPROVED);
 
         final var notification = Notification.create();
         order.validate(notification);

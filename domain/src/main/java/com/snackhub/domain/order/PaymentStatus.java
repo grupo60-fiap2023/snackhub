@@ -1,16 +1,14 @@
 package com.snackhub.domain.order;
 
-public enum OrderStatus {
+public enum PaymentStatus {
 
-    RECEIVED(1,"Recebido"),
-    IN_PREPARATION(2, "Em preparacao"),
-    READY(3, "Pronto"),
-    FINISHED(4,"Finalizado");
+    APPROVED(1,"Aprovado"),
+    DENIED(2, "Negado");
 
     private final Integer id;
     private final String name;
 
-    OrderStatus(Integer id, String name) {
+    PaymentStatus(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

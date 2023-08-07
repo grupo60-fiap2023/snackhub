@@ -17,8 +17,7 @@ public class OrderItem  extends Entity<OrderItemId> {
     }
 
     public static OrderItem newOrderItem(final Product product, final Integer quantity) {
-        final var id = OrderItemId.unique();
-        return new OrderItem(id, product, quantity);
+        return new OrderItem(null, product, quantity);
     }
 
     public static OrderItem with(final OrderItemId orderItemId, final Product product, final Integer quantity) {

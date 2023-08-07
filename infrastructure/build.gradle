@@ -11,12 +11,8 @@ java {
 
 group = 'com.snackhub.infrastructure'
 
-jar {
-    manifest {
-        attributes 'Main-Class': "com/snackhub/Main"
-    }
-    archiveBaseName = 'application'
-    enabled = true
+bootJar {
+    archiveFileName.set('snackhub.jar')
 }
 
 repositories {

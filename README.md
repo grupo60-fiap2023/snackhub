@@ -18,27 +18,32 @@ O objetivo da Clean Architecture é desenvolver sistemas altamente sustentáveis
 
 Essa arquitetura promove a separação de preocupações e permite que cada camada se concentre em sua responsabilidade específica. A ideia é que as dependências fluam de dentro para fora, ou seja, as camadas internas não devem depender das camadas externas, tornando o sistema mais modular e independente.
 
-![](readmefiles/clean.png)
+
+![img.png](readmefiles/cleanmodel.png)
 
 ## Decisão Arquitetural do Desafio
 
+O projeto SnackHub possui três principais módulos:
+* Domain
+* Application
+* Infrastructure
 
+## Domain
 
-**Adapters**
+Nesse módulo estão presente as nossas classes de dominio, projetadas com a utilização de práticas do DDD. 
+No cenário do Clean Architecture representam as Entities. 
 
-Eles são as dependências externas (interface do usuário/entrada e infraestrutura/saída)
+As classes presente nesse módulo não possuem nenhuma dependência externa ou de framework.
 
-* `adapter/inbound`: Estão os controladores.
-* `adapter/outbound`: Estão as integrações externas (repositório, integração de API etc).
+## Application
 
-**Domínio**
+A camada de Use Case é responsável por implementar os casos de uso específicos do negócio da aplicação. 
+A caracteristica desse módulo é abstrair de regras de negócio: A camada de Use Case contém a lógica do negócio da aplicação, mas sem detalhes de implementação relacionados a infraestrutura ou apresentação.
 
-Aqui temos todas as nossas classes que não possuem nenhuma dependência, incluindo dependências de framework.
+## Infrastructure
 
-* `application/core/domain`: Classes de dominio, projetadas com a utilização de práticas do DDD.
-* `application/ports/inbound`: Interfaces que representam nossos casos de uso.
-* `application/ports/outbound`: Interfaces que representam os serviços externos. Observe que aqui não temos nenhuma nomenclatura ligada às tecnologias.
-* `application/core/usecase`: Implementação dos casos de uso.
+A camada de infraestrutura é uma das camadas principais do Clean Architecture (Arquitetura Limpa) proposta por Robert C. Martin. 
+Essa camada é responsável por lidar com os detalhes técnicos, como o acesso a bancos de dados, serviços externos, sistemas de arquivos e outras tecnologias que não são específicas do domínio da aplicação. Sua principal função é permitir a comunicação entre a aplicação e o mundo externo, mantendo a lógica de negócio isolada e independente de detalhes de implementação.
 
 # Vamos Executar?
 
@@ -53,7 +58,7 @@ Aqui temos todas as nossas classes que não possuem nenhuma dependência, inclui
 
 **1. Clonar o repositório:**
 ```sh
-git clone https://github.com/gutembergrcc/snackbar.git
+git clone https://github.com/gutembergrcc/snackhub.git
 ```
 
 **2. Subir a aplicação e o banco de dados MySQL com Docker:**
@@ -64,9 +69,9 @@ docker-compose up -d
 **3. Após a execução do comando acima será baixado as imagens do MySQL e da Aplicação presente no DockerHub e os containers serão iniciados.**
 ```
 [+] Running 3/3
- ✔ Network snackbar_network     Created                                                                                                                                                                                                                                                                                                                                                                                          0.7s 
- ✔ Container snackbar-mysql-db  Started                                                                                                                                                                                                                                                                                                                                                                                          1.9s 
- ✔ Container snackbar-app       Started 
+ ✔ Network snackhub_network     Created                                                                                                                                                                                                                                                                                                                                                                                          0.7s 
+ ✔ Container snackhub-mysql-db  Started                                                                                                                                                                                                                                                                                                                                                                                          1.9s 
+ ✔ Container snackhub-app       Started 
 ```
 Pronto! Aguarde que em instantes o MySQL irá estar pronto para ser consumido
 na porta 3307. Por conflito de porta com a 3306 foi escolhido a local 3307.
@@ -79,17 +84,26 @@ Ver imagem abaixo a organização no Docker Desktop:
 
 **- Images**
 
-![img.png](readmefiles/docker2.png)
+![img_1.png](readmefiles/docker2.png)
 
 O MySQL já estará disponível:
 
-![img.png](readmefiles/mysql.png)
+![img_2.png](readmefiles/mysql.png)
 
 **4. No diretório `src/main/resources/db.migration` está disponível as DDLs a serem executadas com a finalidade de criação das tabelas. O Docker compose inicia a base de dados.**
 
 **5. Como a aplicação também foi inicializada a mesma possui uma interface Swagger, disponível em: http://localhost:8080/api/swagger-ui/index.html**
 
+Além das funcionalidades da Fase 1, foram incluídas:
+* Checkout de Pedido, que deverá receber os produtos solicitados e o cliente e retornar a identificação do pedido. (Como sugestão dos professores foi alterado o id de UUID para Number);
+* Consultar status de pagamento do pedido, que informa se o pagamento foi aprovado ou não;
+* Lista de pedidos ordenado por recebimento e por status.
+* Atualizar o status do pedido
+
+Todas essas features novas podem ser vistas abaixo:
+
 ![img.png](readmefiles/swagger.png)
+
 
 ## Sou Desenvolvedor, tem informações a mais?
 
@@ -103,7 +117,6 @@ Nesse mesmo arquivo possui a configuração de rede do docker e os mapeamos de p
 Nesse caso, "17.0.5_8" indica a versão do Java 17.0.5, enquanto "jre" significa que a imagem contém apenas a Java Runtime Environment, que é o ambiente de execução do Java, sem o kit de desenvolvimento (JDK). Por fim, "alpine" refere-se à base da imagem, que é a distribuição leve Alpine Linux
 Nesse mesmo arquivo copiamos o Jar gerado pela aplicação, criamos um Usuário e Grupo e executamos o Jar da aplicação.
 
-Como a aplicação é dependente da base de dados, além da tag depends_on no docker-compose, foi adicionado um .sh responsável por verificar se a base de dados já está pronta. Essa abordagem evita erros ao subir a aplicação, mas caso evite a utilização do .sh a aplicação possui retry para verificar se a base já está disponível.
 
 `Dockerfile.dev`: Muito similar com a configuração acima, a diferença que esse Dockerfile tem o comando para atualizar e regerar o Jar da aplicação.
 
@@ -112,17 +125,17 @@ Como a aplicação é dependente da base de dados, além da tag depends_on no do
 
 Gerar a Imagem da Aplicação atraves do DockerFile
 ```shell
-docker build -t gutembergrcc/snackbar-app .
+docker build -t gutembergrcc/snackhub-app .
 ```
 
 Caso queira gerar o build do Gradle e gerar a imagem, basta executar o comando abaixo:
 ```shell
-docker build -f Dockerfile.dev -t gutembergrcc/snackbar-app:latest .
+docker build -f Dockerfile.dev -t gutembergrcc/snackhub-app:latest .
 ```
 
 Para subir a imagem para o Hub:
 ```shell
-docker push gutembergrcc/snackbar-app
+docker push gutembergrcc/snackhub-app
 ```
 
 ## Quero desenvolver novos Use Cases, qual a forma mais rápida de testar?

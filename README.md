@@ -135,7 +135,6 @@ docker build -f Dockerfile.dev -t gutembergrcc/snackhub-app:latest .
 
 Para subir a imagem para o Hub:
 ```shell
-```shell
 docker push gutembergrcc/snackhub-app
 ```
 

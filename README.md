@@ -135,12 +135,13 @@ docker build -f Dockerfile.dev -t gutembergrcc/snackhub-app:latest .
 
 Para subir a imagem para o Hub:
 ```shell
+```shell
 docker push gutembergrcc/snackhub-app
 ```
 
 ## Quero desenvolver novos Use Cases, qual a forma mais rápida de testar?
 
-1. Caso o desenvolvedor não queira exedutar a geração do .Jar e levantar o Docker, sugiro executar o docker-compose-only-mysql. 
+1. Caso o desenvolvedor não queira executar a geração do .Jar e levantar o Docker, sugiro executar o docker-compose-only-mysql. 
 Esse YML contêm apenas o serviço de base de dados e a aplicação poderá ser executada conforme o próximo passo.
 
 ```shell
@@ -154,7 +155,7 @@ que ser no Docker, pois reflete o ambiente do "Cliente".
 
 ## Configuração da Aplicação
 
-Nos arquivos `src/main/resources/application.yml` e `src/main/resources/application-developmente.yml` temos as configurações da aplicação, ou seja:
+Nos arquivos `src/main/resources/application.yml` e `src/main/resources/application-development.yml` temos as configurações da aplicação, ou seja:
 - Configuração do datasource
 - Configuração do JPA
 - Configurações do Spring Boot

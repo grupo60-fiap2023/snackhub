@@ -80,6 +80,7 @@ public class Order extends Entity<OrderId> {
     }
 
     public void changeStatus(OrderStatus newStatus){
+
         this.status = newStatus;
     }
 }

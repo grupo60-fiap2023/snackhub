@@ -31,7 +31,7 @@ public class OrderQrCodeFeignGateway implements OrderQrCodeGateway {
                 request.getItems().get(0).title(), request.getItems().get(0).description(), request.getItems().get(0).unitPrice(),
                 request.getItems().get(0).quantity(), request.getItems().get(0).unitMeasure(), request.getItems().get(0).totalAmount()));
 
-        var cashOut = new OrderQrCodeCashOutRequest(request.getCashOut().getAmount());
+        var cashOut = new OrderQrCodeCashOutRequest(request.getCashOut().amount());
         var createOrderQrCodeRequest = new CreateOrderQrCodeRequest(request.getExternalReference(), request.getTitle(),
                 request.getNotificationUrl(), request.getTotalAmount(), orderQrCodeItemsRequests, cashOut, request.getDescription());
 

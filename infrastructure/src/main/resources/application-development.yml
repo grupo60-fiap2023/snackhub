@@ -11,3 +11,16 @@ server:
     threads:
       worker: 10
       io: 2
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+  httpclient:
+    enable: true
+
+mp:
+  url: "https://api.mercadopago.com"

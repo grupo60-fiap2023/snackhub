@@ -17,7 +17,7 @@ services:
       - ./infrastructure/src/main/resources/db.migration/init.sql:/docker-entrypoint-initdb.d/init.sql
   snackhub-app:
     container_name: snackhub-app
-    image: gutembergrcc/snackhub-app:latest
+    image: grupo60fiap2023/snackhub-app:latest
     ports:
       - 8080:8080
     depends_on:

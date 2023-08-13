@@ -125,17 +125,12 @@ Nesse mesmo arquivo copiamos o Jar gerado pela aplicação, criamos um Usuário 
 
 Gerar a Imagem da Aplicação atraves do DockerFile
 ```shell
-docker build -t gutembergrcc/snackhub-app .
-```
-
-Caso queira gerar o build do Gradle e gerar a imagem, basta executar o comando abaixo:
-```shell
-docker build -f Dockerfile.dev -t gutembergrcc/snackhub-app:latest .
+docker build -t grupo60fiap2023/snackhub-app .
 ```
 
 Para subir a imagem para o Hub:
 ```shell
-docker push gutembergrcc/snackhub-app
+docker push grupo60fiap2023/snackhub-app
 ```
 
 ## Quero desenvolver novos Use Cases, qual a forma mais rápida de testar?

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aplicacao-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: container-app
+          image: grupo60fiap2023/snackhub-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MYSQL_HOST
+              value: db-svc-lb.default.svc.cluster.local
+            - name: MYSQL_PORT
+              value: "3307"
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123456"
+            - name: MYSQL_DATABASE
+              value: "snackbar"
+          

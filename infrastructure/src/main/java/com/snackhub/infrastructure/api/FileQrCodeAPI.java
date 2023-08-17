@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping(value = "qr/server")
-@Tag(name = "Image QR Code")
+@Tag(name = "Payment QR Code")
 public interface FileQrCodeAPI {
 
     @GetMapping(value = "createImageQrCode",

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 @RequestMapping(value = "mp/orders")
-@Tag(name = "Order QR Code")
+@Tag(name = "Payment QR Code")
 public interface OrderQrCodeAPI {
 
     @PostMapping(value = "createOrderQrCode/{userId}/{externalPosId}/qrs",

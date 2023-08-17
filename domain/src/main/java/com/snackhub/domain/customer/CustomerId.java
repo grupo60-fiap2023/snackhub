@@ -1,7 +1,6 @@
 package com.snackhub.domain.customer;
 
 import com.snackhub.domain.Identifier;
-import com.snackhub.domain.utils.IdUtils;
 
 import java.util.Objects;
 

@@ -14,7 +14,7 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerCommand, Custom
     private final CustomerGateway customerGateway;
 
     public CreateCustomerUseCase(final CustomerGateway customerGateway) {
-        this.customerGateway = Objects.requireNonNull(customerGateway);;
+        this.customerGateway = Objects.requireNonNull(customerGateway);
     }
 
     @Override

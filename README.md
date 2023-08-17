@@ -58,7 +58,7 @@ Essa camada é responsável por lidar com os detalhes técnicos, como o acesso a
 
 **1. Clonar o repositório:**
 ```sh
-git clone https://github.com/gutembergrcc/snackhub.git
+git clone https://github.com/grupo60-fiap2023/snackhub
 ```
 
 **2. Subir a aplicação e o banco de dados MySQL com Docker:**
@@ -92,7 +92,7 @@ O MySQL já estará disponível:
 
 **4. No diretório `src/main/resources/db.migration` está disponível as DDLs a serem executadas com a finalidade de criação das tabelas. O Docker compose inicia a base de dados.**
 
-**5. Como a aplicação também foi inicializada a mesma possui uma interface Swagger, disponível em: http://localhost:8080/api/swagger-ui/index.html**
+**5. Como a aplicação também foi inicializada a mesma possui uma interface Swagger, disponível em: http://localhost:8080/swagger-ui/index.html**
 
 Além das funcionalidades da Fase 1, foram incluídas:
 * Checkout de Pedido, que deverá receber os produtos solicitados e o cliente e retornar a identificação do pedido. (Como sugestão dos professores foi alterado o id de UUID para Number);

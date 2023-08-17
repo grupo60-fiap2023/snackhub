@@ -16,7 +16,7 @@ public class AutenticateCustomerByCpfUseCase extends UseCase<String, CustomerOut
     private final CustomerGateway customerGateway;
 
     public AutenticateCustomerByCpfUseCase(final CustomerGateway customerGateway) {
-        this.customerGateway = Objects.requireNonNull(customerGateway);;
+        this.customerGateway = Objects.requireNonNull(customerGateway);
     }
 
     @Override

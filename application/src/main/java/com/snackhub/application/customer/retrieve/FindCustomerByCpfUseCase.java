@@ -8,21 +8,18 @@ import com.snackhub.domain.customer.CustomerGateway;
 import java.util.Objects;
 import java.util.Optional;
 
-public class FindCustomerByCpfUseCase extends UseCase<String,CustomerOutput > {
+public class FindCustomerByCpfUseCase extends UseCase<String, CustomerOutput> {
 
     private final CustomerGateway customerGateway;
 
     public FindCustomerByCpfUseCase(final CustomerGateway customerGateway) {
-        this.customerGateway = Objects.requireNonNull(customerGateway);;
+        this.customerGateway = Objects.requireNonNull(customerGateway);
     }
 
     @Override
     public CustomerOutput execute(String cpf) {
         Optional<Customer> customerByCpf = this.customerGateway.findCustomerByCpf(cpf);
 
-        if(customerByCpf.isPresent()){
-            return CustomerOutput.from(customerByCpf.get());
-        }
-        return null;
+        return customerByCpf.map(CustomerOutput::from).orElse(null);
     }
 }

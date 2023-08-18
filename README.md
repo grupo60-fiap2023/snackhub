@@ -97,8 +97,9 @@ O MySQL já estará disponível:
 Além das funcionalidades da Fase 1, foram incluídas:
 * Checkout de Pedido, que deverá receber os produtos solicitados e o cliente e retornar a identificação do pedido. (Como sugestão dos professores foi alterado o id de UUID para Number);
 * Consultar status de pagamento do pedido, que informa se o pagamento foi aprovado ou não;
-* Lista de pedidos ordenado por recebimento e por status.
-* Atualizar o status do pedido
+* Lista de pedidos ordenado por recebimento e por status;
+* Atualizar o status do pedido;
+* Integração com o Mercado Pago para gerar o QR Code de Pagamento;
 
 Todas essas features novas podem ser vistas abaixo:
 

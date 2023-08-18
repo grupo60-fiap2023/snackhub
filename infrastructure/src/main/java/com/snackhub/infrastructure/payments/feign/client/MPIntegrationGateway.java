@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-//TODO interpolação uri
-@FeignClient(value = "mp", url = "https://api.mercadopago.com", configuration = FeignConfig.class)
+@FeignClient(value = "mp", url = "${mp.url}", configuration = FeignConfig.class)
 public interface MPIntegrationGateway {
 
     @PostMapping(value = "/instore/orders/qr/seller/collectors/{userId}/pos/{externalPosId}/qrs")

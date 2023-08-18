@@ -34,7 +34,6 @@ public interface OrderQrCodeAPI {
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
     ResponseEntity<OrderQrCodeResponse> createOrderQrCode(
-            //TODO Criar @ControllerAdvice handler para capturar as exceções, inclusive na falha do token
             @RequestHeader(required = false) @Schema(hidden = true) String authorization,
             @RequestBody @Valid CreateOrderQrCodeRequest input,
             @PathVariable @Schema(description = "Id do usuário da aplicação", example = "187206752") String userId,

@@ -25,7 +25,6 @@ public class OrderQrCodeFeignGateway implements OrderQrCodeGateway {
 
     @Override
     public OrderQrCodeOut createOrderQRCode(String authorization, OrderQrCode request, String userId, String externalPosId) {
-        //TODO Ajustar para Stream
         List<OrderQrCodeItemsRequest> orderQrCodeItemsRequests = List.of(new OrderQrCodeItemsRequest(
                 request.getItems().get(0).id(), request.getItems().get(0).skuNumber(), request.getItems().get(0).category(),
                 request.getItems().get(0).title(), request.getItems().get(0).description(), request.getItems().get(0).unitPrice(),
@@ -37,7 +36,6 @@ public class OrderQrCodeFeignGateway implements OrderQrCodeGateway {
 
         final ResponseEntity<OrderQrCodeResponse> orderQRCode = mpIntegrationGateway.createOrderQRCode(authorization, createOrderQrCodeRequest, userId, externalPosId);
 
-        //TODO Validar nulidade
         return new OrderQrCodeOut(Objects.requireNonNull(orderQRCode.getBody()).inStoreOrderId(), Objects.requireNonNull(orderQRCode.getBody().qrData()));
 
     }

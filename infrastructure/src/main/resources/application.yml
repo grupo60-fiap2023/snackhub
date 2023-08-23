@@ -35,3 +35,21 @@ management:
   endpoint:
     health:
       show-details: always
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+  httpclient:
+    enable: true
+
+mp:
+  url: "https://api.mercadopago.com"
+
+api:
+  qr-server:
+    create-qr-code:
+      url: "https://api.qrserver.com/v1/create-qr-code"

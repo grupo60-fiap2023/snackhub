@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /api
+    context-path:
   compression:
     enabled: true # Whether response compression is enabled.
     mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json # Comma-separated list of MIME types that should be compressed.
@@ -35,3 +35,21 @@ management:
   endpoint:
     health:
       show-details: always
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+  httpclient:
+    enable: true
+
+mp:
+  url: "https://api.mercadopago.com"
+
+api:
+  qr-server:
+    create-qr-code:
+      url: "https://api.qrserver.com/v1/create-qr-code"

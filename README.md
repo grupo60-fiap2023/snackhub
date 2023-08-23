@@ -58,7 +58,7 @@ Essa camada é responsável por lidar com os detalhes técnicos, como o acesso a
 
 **1. Clonar o repositório:**
 ```sh
-git clone https://github.com/gutembergrcc/snackhub.git
+git clone https://github.com/grupo60-fiap2023/snackhub
 ```
 
 **2. Subir a aplicação e o banco de dados MySQL com Docker:**
@@ -92,13 +92,15 @@ O MySQL já estará disponível:
 
 **4. No diretório `src/main/resources/db.migration` está disponível as DDLs a serem executadas com a finalidade de criação das tabelas. O Docker compose inicia a base de dados.**
 
-**5. Como a aplicação também foi inicializada a mesma possui uma interface Swagger, disponível em: http://localhost:8080/api/swagger-ui/index.html**
+**5. Como a aplicação também foi inicializada a mesma possui uma interface Swagger, disponível em: http://localhost:8080/swagger-ui/index.html**
 
 Além das funcionalidades da Fase 1, foram incluídas:
 * Checkout de Pedido, que deverá receber os produtos solicitados e o cliente e retornar a identificação do pedido. (Como sugestão dos professores foi alterado o id de UUID para Number);
 * Consultar status de pagamento do pedido, que informa se o pagamento foi aprovado ou não;
-* Lista de pedidos ordenado por recebimento e por status.
-* Atualizar o status do pedido
+* Lista de pedidos ordenado por recebimento e por status;
+* Atualizar o status do pedido;
+* Integração com o Mercado Pago para gerar o QR Code de Pagamento;
+* Webhook de criação de pagamento;
 
 Todas essas features novas podem ser vistas abaixo:
 
@@ -154,3 +156,47 @@ Nos arquivos `src/main/resources/application.yml` e `src/main/resources/applicat
 - Configuração do JPA
 - Configurações do Spring Boot
 - Dados de Acesso a base de dados
+
+## Testando notificações com Webhook.site
+
+     - Abra o https://webhook.site
+  - Copie a URL para receber as notificações de webhook teste:
+
+    ![img.png](readmefiles/webhooksite.png)
+
+- ### Request de integração com o Mercado Pago para a criação do QR Code:
+      - Adicione o token: TEST-8612056198451486-073114-a61ef52c83bb32844fd839b3d311672c-187206752
+
+  - Cole a url gerada do webhook.site no campo notification_url do seu body
+  
+    ![img.png](readmefiles/create-qrdata.png)
+  
+  - Copie o qr_data gerado:
+  
+    ![img.png](readmefiles/generate-qrdata.png)
+  
+  - Já é possível validar a notificação de retorno do Mercado Pago com um número de ordem criado:
+  
+    ![img.png](readmefiles/merchant-order.png)
+  
+- ### Request de criação da imagem do QR Code:
+    - Cole o qr_data gerado na request anterior
+  
+      ![img.png](readmefiles/create-image-qrcode.png)
+  
+    - Scnnear o QR e realize o pagamento:
+  
+      ![img.png](readmefiles/image-genarate.png)
+  
+  - ### Pagamento com o Mercado Pago:
+    - QR scanneado com app do Mercado Pago:
+    
+      ![img.png](readmefiles/payment.png)
+    
+    - Erro ao realizar o pagamento:
+    
+      ![img.png](readmefiles/error-payment.png)
+    
+    - É possível validar a notificação da criação do pagamento no Webhook teste:
+    
+      ![img.png](readmefiles/payment-created.png)

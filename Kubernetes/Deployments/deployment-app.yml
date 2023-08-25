@@ -19,7 +19,9 @@ spec:
             - containerPort: 8080
           env:
             - name: MYSQL_URL
-              value: "localhost:3306"
+              value: db-svc-lb.default.svc.cluster.local
+            - name: MYSQL_PORT
+              value: "3306"
             - name: MYSQL_SCHEMA
               value: "snackhub"
             - name: MYSQL_USERNAME

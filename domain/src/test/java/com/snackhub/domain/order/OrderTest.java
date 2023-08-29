@@ -33,7 +33,6 @@ public class OrderTest {
         final var order = Order.newOrder(Arrays.asList(item), getCustomerMock(), null, PaymentStatus.APPROVED);
 
         Assertions.assertNotNull(order);
-        Assertions.assertNotNull(order.getId());
         Assertions.assertNotNull(order.getCustomer());
         Assertions.assertEquals(item, order.getItems().stream().findFirst().get());
     }

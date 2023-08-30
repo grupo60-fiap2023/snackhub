@@ -21,13 +21,25 @@ spec:
             - name: MYSQL_URL
               value: db-svc-lb.default.svc.cluster.local
             - name: MYSQL_PORT
-              value: "3306"
+              valueFrom:
+                secretKeyRef:
+                  name: secret-db-app
+                  key: mysql_port
             - name: MYSQL_SCHEMA
-              value: "snackhub"
+              valueFrom:
+                secretKeyRef:
+                  name: secret-db-app
+                  key: mysql_schema
             - name: MYSQL_USERNAME
-              value: "root"
+              valueFrom:
+                secretKeyRef:
+                  name: secret-db-app
+                  key: mysql_username
             - name: MYSQL_PASSWORD
-              value: "123456"
+              valueFrom:
+                secretKeyRef:
+                  name: secret-db-app
+                  key: mysql_password
       volumes:
         - name: init-sql
           configMap:

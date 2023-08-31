@@ -55,7 +55,7 @@ Além disso, sua capacidade de autorrecuperação assegura a estabilidade da apl
 
 No diretório "Kubernetes" localizado na raiz do projeto, encontram-se as configurações dos deployments, volumes e services.
 
-* O deployment da aplicação e da base de dados está configurado para 1 réplica, como pode ser visto nos deployments, mas a aplicação pode ser escalada para mais de um Pod.
+* O deployment da aplicação e da base de dados está configurado para 1 réplica, como pode ser visto nos deployments. A aplicação pode ser escalada para mais de um Pod, conforme solicitado no desafio. A recomendação do Kubernetes é que a escala para LoadBalance seja de 3 a 5 Pods.
 * O services foram configurados como Load Balance e do tipo NLB.
 * Os dados sensíveis estão cadastrados no secrets e ofuscados.
 

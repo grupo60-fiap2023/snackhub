@@ -45,28 +45,105 @@ A caracteristica desse módulo é abstrair de regras de negócio: A camada de Us
 A camada de infraestrutura é uma das camadas principais do Clean Architecture (Arquitetura Limpa) proposta por Robert C. Martin. 
 Essa camada é responsável por lidar com os detalhes técnicos, como o acesso a bancos de dados, serviços externos, sistemas de arquivos e outras tecnologias que não são específicas do domínio da aplicação. Sua principal função é permitir a comunicação entre a aplicação e o mundo externo, mantendo a lógica de negócio isolada e independente de detalhes de implementação.
 
+## Decisão Orquestração de Cointainers do Desafio
+
+Para a orquestração dos containers foi escolhido o Kubernetes para garantir escalabilidade, alta disponibilidade e facilidade de gerenciamento. 
+Com o Kubernetes, podemos orquestrar e automatizar o deployment, scaling e atualizações de nossos containers de forma eficiente. 
+Além disso, sua capacidade de autorrecuperação assegura a estabilidade da aplicação, reduzindo o tempo de inatividade.
+
+## Organização Kubernetes
+
+No diretório "Kubernetes" localizado na raiz do projeto, encontram-se as configurações dos deployments, volumes e services.
+
+* O deployment da aplicação e da base de dados está configurado para 1 réplica, como pode ser visto nos deployments, mas a aplicação pode ser escalada para mais de um Pod.
+* O services foram configurados como Load Balance e do tipo NLB.
+* Os dados sensíveis estão cadastrados no secrets e ofuscados.
+
+## APIs solicitadas na fase 2
+
+* Checkout do Pedido, que deverá receber os produtos solicitados e retornar a identificação do pedido.
+
+A api `orders/createOrder` é solicitado o identificador do cliente e uma coleção de itens com o identificador do produto e a quantidade.
+Como retorno da API será listado o que o pedido contém e o identificador do pedido com o status do pagamento e do pedido.
+
+* Consultar status de pagamento do pedido, que informa se o pagamento foi aprovado ou não.
+
+A api `/orders/paymentstatus/{id}` quando informado o id do pedido retornará o status do pagamento.
+
+* A lista de pedidos deverá retornar os pedidos com suas descrições, ordenados por recebimento e por status com a seguinte prioridade: Pronto > Em Preparação > Recebido; Pedidos com status Finalizado não devem aparecer na lista.
+
+A api `/orders/list` retornará os pedidos com a prioridade solicitada.
+
+* Atualizar o status do pedido
+
+A api `/orders/{id}` atualiza um determinado pedido com o status informado.
+
+* Webhook
+
+Descrito na sessão subsequente como utilizar. API Paymente QR Code é utilizada para o pagamento. 
+
+Como melhoria nessa fase, foi acatada a sugestão de trocas de UUID das entidades por Id sequences.
+
 # Vamos Executar?
 
 ## Ferramentas necessárias / Pré-requisitos
 
 - JDK 17
 - IDE de sua preferência
+- Kubernets / kubctl
 - Docker
 - O banco de dados utilizado é o MySQL, caso queira ver os dados é sugerido a utilização do SGBD mySQL Workbench
 
-## Como executar?
+## Como executar com Kubernetes?
 
 **1. Clonar o repositório:**
 ```sh
 git clone https://github.com/grupo60-fiap2023/snackhub
 ```
 
-**2. Subir a aplicação e o banco de dados MySQL com Docker:**
+**2. Acessar a pasta Kubernetes:**
+```sh
+cd Kubernetes
+```
+
+**3. Executado a criação do banco MySQL:**
+```bat
+'.\Init DB.bat'
+```
+
+Caso esteja utilizado um sistema operacional que não seja Windows:
+```sh
+kubectl delete service,deployments,persistentvolumeclaim,configmap,secrets --all
+kubectl apply -f Secrets\secrets.yml
+kubectl apply -f PersistentVolumeClaim\pvc-db.yml
+kubectl apply -f ConfigMap\configmap-db.yml
+kubectl apply -f Deployments\deployment-db.yml
+kubectl apply -f Services\svc-db.yml
+```
+*Atenção: Na primeira linha do comando tem um delete all para remover possiveis lixos em caso de atualização das configurações.
+
+**4. Executado a criação do banco Aplicação:**
+```bat
+'.\Init App.bat'
+```
+
+Caso esteja utilizado um sistema operacional que não seja Windows:
+```sh
+kubectl delete Services app-svc-lb
+kubectl delete Deployments aplicacao-deployment
+
+kubectl apply -f Deployments\deployment-app.yml
+kubectl apply -f Services\svc-app.yml
+```
+
+## Como executar só com Docker?
+
+**1. Subir a aplicação e o banco de dados MySQL com Docker:**
 ```shell
 docker-compose up -d
 ```
 
-**3. Após a execução do comando acima será baixado as imagens do MySQL e da Aplicação presente no DockerHub e os containers serão iniciados.**
+**2. Após a execução do comando acima será baixado as imagens do MySQL e da Aplicação presente no DockerHub e os containers serão iniciados.**
 ```
 [+] Running 3/3
  ✔ Network snackhub_network     Created                                                                                                                                                                                                                                                                                                                                                                                          0.7s 

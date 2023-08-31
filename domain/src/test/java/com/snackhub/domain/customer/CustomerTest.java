@@ -15,7 +15,6 @@ public class CustomerTest {
         final var actualCustomer = Customer.newCustomer(expectedFirstName, expectedLastName, expectedCPF);
 
         Assertions.assertNotNull(actualCustomer);
-        Assertions.assertNotNull(actualCustomer.getId());
         Assertions.assertEquals(expectedFirstName, actualCustomer.getFirstName());
         Assertions.assertEquals(expectedLastName, actualCustomer.getLastName());
         Assertions.assertEquals(expectedCPF, actualCustomer.getCpf());

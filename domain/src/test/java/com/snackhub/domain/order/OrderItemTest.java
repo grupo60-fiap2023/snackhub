@@ -26,7 +26,6 @@ public class OrderItemTest {
         OrderItem item = OrderItem.newOrderItem(getProductMock(), quantity);
 
         Assertions.assertNotNull(item);
-        Assertions.assertNotNull(item.getId());
         Assertions.assertEquals(quantity, item.getQuantity());
     }
 

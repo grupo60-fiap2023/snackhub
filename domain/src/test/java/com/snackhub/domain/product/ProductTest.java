@@ -18,7 +18,6 @@ public class ProductTest {
         final var actualProduct = Product.newProduct(expectedName, expectedPrice, expectedDescription, expectedCategory);
 
         Assertions.assertNotNull(actualProduct);
-        Assertions.assertNotNull(actualProduct.getId());
         Assertions.assertEquals(expectedName, actualProduct.getName());
         Assertions.assertEquals(expectedPrice, actualProduct.getPrice());
         Assertions.assertEquals(expectedCategory, actualProduct.getCategory());

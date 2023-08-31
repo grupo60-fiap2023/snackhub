@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-app
+data:
+  application.yml: |-
+    mysql:
+      username: root
+      password: 123456
+      schema: snackhub
+      #url: snackhub-mysql-db:3306
+      url: 127.0.0.1:3307

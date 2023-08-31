@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aplicacao-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: container-app
+          image: grupo60fiap2023/snackhub-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MYSQL_URL
+              value: db-svc-lb.default.svc.cluster.local
+            - name: MYSQL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret-db-app
+                  key: mysql_port
+            - name: MYSQL_SCHEMA
+              valueFrom:
+                secretKeyRef:
+                  name: secret-db-app
+                  key: mysql_schema
+            - name: MYSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-db-app
+                  key: mysql_username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-db-app
+                  key: mysql_password
+      volumes:
+        - name: init-sql
+          configMap:
+            name: configmap-app
+          

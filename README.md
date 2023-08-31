@@ -136,6 +136,11 @@ kubectl apply -f Deployments\deployment-app.yml
 kubectl apply -f Services\svc-app.yml
 ```
 
+**Os pods serão inicializados e a aplicação estará disponível em: http://localhost:8080/swagger-ui/index.html**
+
+![img.png](readmefiles/k8s_desktop.png)
+
+
 ## Como executar só com Docker?
 
 **1. Subir a aplicação e o banco de dados MySQL com Docker:**
@@ -169,7 +174,7 @@ O MySQL já estará disponível:
 
 **4. No diretório `src/main/resources/db.migration` está disponível as DDLs a serem executadas com a finalidade de criação das tabelas. O Docker compose inicia a base de dados.**
 
-**5. Como a aplicação também foi inicializada a mesma possui uma interface Swagger, disponível em: http://localhost:8080/api/swagger-ui/index.html**
+**5. Como a aplicação também foi inicializada a mesma possui uma interface Swagger, disponível em: http://localhost:8080/swagger-ui/index.html**
 
 Além das funcionalidades da Fase 1, foram incluídas:
 * Checkout de Pedido, que deverá receber os produtos solicitados e o cliente e retornar a identificação do pedido. (Como sugestão dos professores foi alterado o id de UUID para Number);

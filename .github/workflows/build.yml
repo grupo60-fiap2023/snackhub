@@ -77,13 +77,9 @@ jobs:
 
   deploy-pre:
     runs-on: ubuntu-latest
-    environment:
-      name: pre
-      #url: 'https://fiapdevops.herokuapp.com/fiap'
     needs: code-analisys
     steps:
       - uses: actions/checkout@v2
-        #- uses: akhileshns/heroku-deploy@v3.12.12
         run: |
           echo "Login to Amazon ECR Private 🔑🚪"
           echo "Build, tag, and push docker image to Amazon ECR 🏗️"

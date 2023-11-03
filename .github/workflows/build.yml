@@ -18,19 +18,19 @@ jobs:
         with:
           java-version: 17
           distribution: 'zulu' # Alternative distribution options are available
-      - name: Cache SonarCloud packages
+      - name: Cache SonarCloud packages 📦
         uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Gradle packages
+      - name: Cache Gradle packages 📦
         uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Change wrapper permissions
+      - name: Change wrapper permissions 🛡️
         run: chmod +x gradlew
       - name: Build and analyze
         env:
@@ -49,19 +49,19 @@ jobs:
         with:
           java-version: 17
 
-      - name: Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew 🛡️
         run: chmod +x gradlew
 
-      - name: Run Coverage
+      - name: Run Coverage 🔌
         run: ./gradlew testCoverage
 
-      - name: Upload Report
+      - name: Upload Report 📓
         uses: 'actions/upload-artifact@v2'
         with:
           name: report.xml
           path: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
 
-      - name: Jacoco Report to PR
+      - name: Jacoco Report to PR 📓
         id: jacoco
         uses: madrapps/jacoco-report@v1.6.1
         with:
@@ -71,7 +71,7 @@ jobs:
           min-coverage-changed-files: 60
           debug-mode: false
 
-      - name: Get the Coverage info
+      - name: Get the Coverage info 📓
         run: |
           echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
           echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"

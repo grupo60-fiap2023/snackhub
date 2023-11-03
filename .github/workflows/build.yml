@@ -104,6 +104,6 @@ jobs:
           REPOSITORY: ecr-repository
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }} -t ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest . -f Docker/console-worker.Dockerfile
+          docker build -t ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }} -t ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest . -f Dockerfile
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest

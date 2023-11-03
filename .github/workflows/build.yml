@@ -62,7 +62,7 @@ jobs:
 
       - name: Jacoco Report to PR
         id: jacoco
-        uses: snackhub/infrastructure/jacoco-report@v1.1
+        uses: actions/jacoco-report@v1.1
         with:
           path: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
           token: ${{ secrets.GITHUB_TOKEN }}

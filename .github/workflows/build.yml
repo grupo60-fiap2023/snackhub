@@ -74,12 +74,3 @@ jobs:
         run: |
           echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
           echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
-
-  deploy-pre:
-    runs-on: ubuntu-latest
-    needs: code-analisys
-    steps:
-      - uses: actions/checkout@v2
-        run: |
-          echo "Login to Amazon ECR Private 🔑🚪"
-          echo "Build, tag, and push docker image to Amazon ECR 🏗️"

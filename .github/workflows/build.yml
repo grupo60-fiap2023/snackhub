@@ -86,7 +86,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
-
+      - name: Build and analyze 🔍
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew build
       - name: Configure AWS credentials 🔑
         uses: aws-actions/configure-aws-credentials@v1
         with:

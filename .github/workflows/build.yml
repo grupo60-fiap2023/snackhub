@@ -86,6 +86,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+      - name: Change wrapper permissions 🛡️
+        run: chmod +x gradlew
       - name: Build and analyze 🔍
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any

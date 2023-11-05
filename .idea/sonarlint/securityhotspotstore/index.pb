@@ -1,0 +1,17 @@
+
+K
+.github/workflows/build.yml,f\e\fe77d5d1439f26e353a42bbd38dece2467ff6558
+?
+settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
+K
+infrastructure/build.gradle,d\0\d08ad7275ca05d13cb570f6f624eee8075619a60
+H
+sonar-project.properties,2\5\2538046035efb77ecc44e1fd2eec1e2641594d4c
+K
+.github/workflows/sssss.yml,b\1\b1ca047587cfbf8b895095095bbd86f80990b3d2
+H
+application/build.gradle,a\a\aa9cf0dce48be9892530b6983bf9282cc49f2a75
+X
+(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+C
+domain/build.gradle,a\3\a3021bb5ba623a461b5fdb89ae51923a4945c354

@@ -111,6 +111,7 @@ jobs:
           REPOSITORY: ecr-repository
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS ${{ env.REGISTRY }}
           docker build -t ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }} -t ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest . -f Dockerfile
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest

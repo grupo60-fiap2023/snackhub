@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id "org.sonarqube" version "4.4.1.3373"
+    id 'jacoco'
 }
 
 group = 'com.snackhub.domain'
@@ -15,4 +17,45 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion '0.8.10'
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+tasks.create(name: "testCoverage", type: JacocoReport, dependsOn: "test") {
+
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for the test build."
+
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+    }
+
+    def excludes = [
+            '**/*Test*.*',
+            '**/actions/*.*',
+            '**/core/*.*',
+            '**/markers/*.*',
+            '**/services/**/*.*',
+            '**/toolwindow/*.*',
+            '**/utils/*.*'
+    ]
+
+    def javaDomainClasses = fileTree(dir: "${buildDir}/domain/classes/java/main", excludes: excludes)
+    classDirectories.from = files([javaDomainClasses])
+
+    sourceDirectories.from = files([
+            "$project.projectDir/domain/src/main/java",
+            "$buildDir/generated/source/kapt/test"
+    ])
+
+    executionData.from = files("${project.buildDir}/domain/test.exec")
+
 }

@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id "org.sonarqube" version "4.4.1.3373"
+    id 'jacoco'
 }
 
 group = 'com.snackhub.application'
@@ -14,6 +16,55 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
+sonar {
+    properties {
+        property "sonar.projectKey", "grupo60-fiap2023_snackhub"
+        property "sonar.organization", "grupo60-fiap2023"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
 test {
     useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion '0.8.10'
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+tasks.create(name: "testCoverage", type: JacocoReport, dependsOn: "test") {
+
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for the test build."
+
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+    }
+
+    def excludes = [
+            '**/*Test*.*',
+            '**/actions/*.*',
+            '**/core/*.*',
+            '**/markers/*.*',
+            '**/services/**/*.*',
+            '**/toolwindow/*.*',
+            '**/utils/*.*'
+    ]
+
+    def javaAppClasses = fileTree(dir: "${buildDir}/application/classes/java/main", excludes: excludes)
+    classDirectories.from = files([javaAppClasses])
+
+    sourceDirectories.from = files([
+            "$project.projectDir/application/src/main/java",
+            "$buildDir/generated/source/kapt/test"
+    ])
+
+    executionData.from = files("${project.buildDir}/application/test.exec")
+
 }

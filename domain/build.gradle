@@ -10,9 +10,19 @@ repositories {
     mavenCentral()
 }
 
+sonar {
+    properties {
+        property "sonar.projectKey", "grupo60-fiap2023_snackhub"
+        property "sonar.organization", "grupo60-fiap2023"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 test {

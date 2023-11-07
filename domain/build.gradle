@@ -10,6 +10,11 @@ repositories {
     mavenCentral()
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 sonar {
     properties {
         property "sonar.projectKey", "grupo60-fiap2023_snackhub"

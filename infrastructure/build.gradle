@@ -121,7 +121,7 @@ tasks.create(name: "testCoverage", type: JacocoReport, dependsOn: "test") {
 
 sonar {
     properties {
-        property "sonar.projectKey", "grupo60-fiap2023_snackhub"
+        property "sonar.projectKey", "grupo60-fiap2023"
         property "sonar.organization", "grupo60-fiap2023"
         property "sonar.host.url", "https://sonarcloud.io"
     }

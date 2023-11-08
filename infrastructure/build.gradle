@@ -107,14 +107,20 @@ tasks.create(name: "testCoverage", type: JacocoReport, dependsOn: "test") {
             '**/utils/*.*'
     ]
 
+    def javaDomainClasses = fileTree(dir: "${buildDir}/domain/classes/java/main", excludes: excludes)
+    def javaAppClasses = fileTree(dir: "${buildDir}/application/classes/java/main", excludes: excludes)
     def javaInfraClasses = fileTree(dir: "${buildDir}/infrastructure/classes/java/main", excludes: excludes)
-    classDirectories.from = files([javaInfraClasses])
+    classDirectories.from = files([javaDomainClasses, javaAppClasses, javaInfraClasses])
 
     sourceDirectories.from = files([
+            "$project.projectDir/domain/src/main/java",
+            "$project.projectDir/application/src/main/java",
             "$project.projectDir/infrastructure/src/main/java",
             "$buildDir/generated/source/kapt/test"
     ])
 
+    executionData.from = files("${project.buildDir}/domain/test.exec")
+    executionData.from = files("${project.buildDir}/application/test.exec")
     executionData.from = files("${project.buildDir}/infrastructure/test.exec")
 
 }

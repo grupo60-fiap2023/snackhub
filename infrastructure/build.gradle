@@ -6,6 +6,13 @@ plugins {
     id 'jacoco'
 }
 
+jacocoTestReport {
+    reports {
+        xml.required = true
+        dependsOn test // tests are required to run before generating the report
+    }
+}
+
 sonar {
     properties {
         property "sonar.projectKey", "grupo60-fiap2023_snackhub"
@@ -67,10 +74,12 @@ dependencyManagement {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
 }
 
 jacoco {
     toolVersion '0.8.10'
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
 
 tasks.withType(Test) {

@@ -15,3 +15,11 @@ X
 (gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 C
 domain/build.gradle,a\3\a3021bb5ba623a461b5fdb89ae51923a4945c354
+A
+domain/.gitignore,f\0\f0beecb3fabf37dd9436f6a769abf826f97eba92
+W
+'infrastructure/sonar-project.properties,f\a\fac62b5576505e0048c05cc7747da795a88f9d9c
+T
+$application/sonar-project.properties,f\2\f2b7dca6113db33478b78c789a0d78eec407c9ab
+O
+domain/sonar-project.properties,7\2\723682d7a4747cc2513c8dd4a78f0f784de80f6f

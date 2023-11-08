@@ -1,5 +1,19 @@
 plugins {
     id 'java'
+    id "org.sonarqube" version "4.0.0.2929"
+    id 'jacoco'
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        dependsOn test // tests are required to run before generating the report
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 group = 'com.snackhub.application'
@@ -12,8 +26,59 @@ dependencies {
     implementation(project(":domain"))
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacoco {
+    toolVersion '0.8.9'
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+tasks.create(name: "testCoverage", type: JacocoReport, dependsOn: "test") {
+
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for the test build."
+
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+    }
+
+    def excludes = [
+            '**/*Test*.*',
+            '**/actions/*.*',
+            '**/core/*.*',
+            '**/markers/*.*',
+            '**/services/**/*.*',
+            '**/toolwindow/*.*',
+            '**/utils/*.*'
+    ]
+
+    def javaAppClasses = fileTree(dir: "${buildDir}/application/classes/java/main", excludes: excludes)
+    classDirectories.from = files([javaAppClasses])
+
+    sourceDirectories.from = files([
+            "$project.projectDir/application/src/main/java",
+            "$buildDir/generated/source/kapt/test"
+    ])
+    executionData.from = files("${project.buildDir}/application/test.exec")
+
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "grupo60-fiap2023_snackhub"
+        property "sonar.organization", "grupo60-fiap2023"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }

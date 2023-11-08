@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.1.0'
-    id "org.sonarqube" version "4.4.1.3373"
+    id "org.sonarqube" version "4.0.0.2929"
     id 'jacoco'
 }
 
@@ -10,14 +10,6 @@ jacocoTestReport {
     reports {
         xml.required = true
         dependsOn test // tests are required to run before generating the report
-    }
-}
-
-sonar {
-    properties {
-        property "sonar.projectKey", "grupo60-fiap2023_snackhub"
-        property "sonar.organization", "grupo60-fiap2023"
-        property "sonar.host.url", "https://sonarcloud.io"
     }
 }
 
@@ -78,7 +70,7 @@ test {
 }
 
 jacoco {
-    toolVersion '0.8.10'
+    toolVersion '0.8.9'
     reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
 
@@ -123,4 +115,12 @@ tasks.create(name: "testCoverage", type: JacocoReport, dependsOn: "test") {
     executionData.from = files("${project.buildDir}/application/test.exec")
     executionData.from = files("${project.buildDir}/infrastructure/test.exec")
 
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "grupo60-fiap2023_snackhub"
+        property "sonar.organization", "grupo60-fiap2023"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }

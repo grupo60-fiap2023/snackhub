@@ -44,37 +44,6 @@ tasks.withType(Test) {
     jacoco.excludes = ['jdk.internal.*']
 }
 
-tasks.create(name: "testCoverage", type: JacocoReport, dependsOn: "test") {
-
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports for the test build."
-
-    reports {
-        html.required.set(true)
-        xml.required.set(true)
-    }
-
-    def excludes = [
-            '**/*Test*.*',
-            '**/actions/*.*',
-            '**/core/*.*',
-            '**/markers/*.*',
-            '**/services/**/*.*',
-            '**/toolwindow/*.*',
-            '**/utils/*.*'
-    ]
-
-    def javaAppClasses = fileTree(dir: "${buildDir}/application/classes/java/main", excludes: excludes)
-    classDirectories.from = files([javaAppClasses])
-
-    sourceDirectories.from = files([
-            "$project.projectDir/application/src/main/java",
-            "$buildDir/generated/source/kapt/test"
-    ])
-    executionData.from = files("${project.buildDir}/application/test.exec")
-
-}
-
 sonar {
     properties {
         property "sonar.projectKey", "grupo60-fiap2023_snackhub"

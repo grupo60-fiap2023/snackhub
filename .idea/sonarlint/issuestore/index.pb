@@ -23,3 +23,5 @@ T
 $application/sonar-project.properties,f\2\f2b7dca6113db33478b78c789a0d78eec407c9ab
 O
 domain/sonar-project.properties,7\2\723682d7a4747cc2513c8dd4a78f0f784de80f6f
+T
+$.github/workflows/aws_deployment.yml,8\5\850f56551f726825323b8244c643d3402c219493

@@ -17,10 +17,6 @@ jobs:
       - name: Grant execute permission for gradlew 🛡️
         run: chmod +x gradlew
 
-      - name: Generate JaCoCo Badge
-        id: jacoco
-        uses: cicirello/jacoco-badge-generator@v2.0.1
-
       - name: Log coverage percentage
         run: |
           echo "coverage = ${{ steps.jacoco.outputs.coverage }}"

@@ -282,3 +282,21 @@ Nos arquivos `src/main/resources/application.yml` e `src/main/resources/applicat
     - É possível validar a notificação da criação do pagamento no Webhook teste:
     
       ![img.png](readmefiles/payment-created.png)
+
+
+# Fase 3 - Deploy App AWS - CI/CD com Action
+### Vídeo para avaliação dos mentores
+https://youtu.be/zUBYuLAImTA
+
+Configuração CI/CD:
+* Build do código Java
+* Análise de código com SonarCloud
+* Configuração das credenciais Amazon
+* Criação/Atualização da App
+
+Arquivo build.yml:
+https://github.com/grupo60-fiap2023/snackhub/blob/main/.github/workflows/build.yml
+
+PR da Exibição: https://github.com/grupo60-fiap2023/snackhub/actions/runs/6806916290
+
+SonarCloud do projeto: https://sonarcloud.io/summary/overall?id=grupo60-fiap2023_snackhub
